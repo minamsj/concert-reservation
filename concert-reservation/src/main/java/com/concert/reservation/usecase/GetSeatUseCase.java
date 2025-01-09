@@ -8,6 +8,7 @@ import java.util.List;
 
 @Service
 public class GetSeatUseCase {
+
     private final ReservationManager reservationManager;
 
     public GetSeatUseCase(ReservationManager reservationManager) {
