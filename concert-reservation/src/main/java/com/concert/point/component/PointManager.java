@@ -1,5 +1,6 @@
 package com.concert.point.component;
 
+import com.concert.point.dto.request.PointChargeRequest;
 import com.concert.point.entity.Point;
 import com.concert.point.entity.PointHistory;
 import com.concert.repositories.point.PointHistoryRepository;
@@ -9,6 +10,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class PointManager {
+
     private final PointRepository pointRepository;
     private final PointHistoryRepository pointHistoryRepository;
 
@@ -34,10 +36,17 @@ public class PointManager {
 
     // 잔액 충전
     public void chargePoint(Long userId, Long amount) {
+        if (amount < 10000) throw new RuntimeException();
         pointRepository.chargePoint(userId, amount);
     }
 
-    public void savePointhistory(PointHistory pointHistory) {
+    public void savePointhistory(PointChargeRequest request) {
+        PointHistory pointHistory = PointHistory.builder()
+                .userId(request.getUserId())
+                .point(request.getAmount())
+                .type("charge")
+                .build();
+
         pointHistoryRepository.save(pointHistory);
     }
 }

@@ -19,15 +19,7 @@ public class ChargePointUseCase {
 
     @Transactional
     public void execute(PointChargeRequest request) {
-        if (request.getAmount() < 1) throw new RuntimeException();
         pointManager.chargePoint(request.getUserId(), request.getAmount());
-
-        PointHistory pointHistory = PointHistory.builder()
-                .userId(request.getUserId())
-                .point(request.getAmount())
-                .type("charge")
-                .build();
-
-        pointManager.savePointhistory(pointHistory);
+        pointManager.savePointhistory(request);
     }
 }
