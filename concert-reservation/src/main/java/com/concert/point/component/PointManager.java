@@ -2,8 +2,8 @@ package com.concert.point.component;
 
 import com.concert.point.entity.Point;
 import com.concert.point.entity.PointHistory;
-import com.concert.repositories.PointHistoryRepository;
-import com.concert.repositories.PointRepository;
+import com.concert.repositories.point.PointHistoryRepository;
+import com.concert.repositories.point.PointRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 

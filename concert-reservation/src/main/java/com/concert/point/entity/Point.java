@@ -11,6 +11,7 @@ import lombok.Setter;
 public class Point {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "point_id")
     private Long id;
 
     @Column(name = "user_id")
