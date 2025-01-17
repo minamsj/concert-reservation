@@ -5,20 +5,16 @@ import com.concert.point.entity.Point;
 import com.concert.point.entity.PointHistory;
 import com.concert.repositories.point.PointHistoryRepository;
 import com.concert.repositories.point.PointRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
+@RequiredArgsConstructor
 public class PointManager {
 
     private final PointRepository pointRepository;
     private final PointHistoryRepository pointHistoryRepository;
-
-    @Autowired
-    public PointManager(PointRepository pointRepository, PointHistoryRepository pointHistoryRepository) {
-        this.pointRepository = pointRepository;
-        this.pointHistoryRepository = pointHistoryRepository;
-    }
 
     // 잔액 조회
     public Long getPoint(Long userId) {
@@ -37,7 +33,12 @@ public class PointManager {
     // 잔액 충전
     public void chargePoint(Long userId, Long amount) {
         if (amount < 10000) throw new RuntimeException();
-        pointRepository.chargePoint(userId, amount);
+        Long point = pointRepository.getPoint(userId);
+        if (point == null) {
+            pointRepository.save(new Point(userId, amount));
+        } else {
+            pointRepository.chargePoint(userId, amount);
+        }
     }
 
     public void savePointhistory(PointChargeRequest request) {

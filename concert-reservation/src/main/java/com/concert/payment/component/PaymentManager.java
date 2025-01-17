@@ -5,20 +5,17 @@ import com.concert.payment.entity.Payment;
 import com.concert.repositories.payment.ExpiredTokenRepository;
 import com.concert.repositories.payment.PaymentRepository;
 import com.concert.repositories.payment.PaymentReservationRepository;
+import com.concert.repositories.point.PointRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
 @Component
+@RequiredArgsConstructor
 public class PaymentManager {
 
     private final PaymentRepository paymentRepository;
     private final PaymentReservationRepository paymentReservationRepository;
-    private final ExpiredTokenRepository expiredTokenRepository;
-
-    public PaymentManager(PaymentRepository paymentRepository, PaymentReservationRepository paymentReservationRepository, ExpiredTokenRepository expiredTokenRepository) {
-        this.paymentRepository = paymentRepository;
-        this.paymentReservationRepository = paymentReservationRepository;
-        this.expiredTokenRepository = expiredTokenRepository;
-    }
+    private final PointRepository pointRepository;
 
     public void payment(PaymentRequest request) {
         if (request.getAmount() < 10000) throw new RuntimeException();
@@ -27,7 +24,6 @@ public class PaymentManager {
         paymentReservationRepository.paymentReservation(request);
         
         // 결제 내역 저장
-        // DTO -> 엔티티 변환
         Payment payment = Payment.builder()
                 .userId(request.getUserId())
                 .amount(request.getAmount())
@@ -35,8 +31,5 @@ public class PaymentManager {
 
         // 결제 내역 저장
         paymentRepository.save(payment);
-        
-        // 토큰 만료 처리
-        expiredTokenRepository.expireToken(request);
     }
 }

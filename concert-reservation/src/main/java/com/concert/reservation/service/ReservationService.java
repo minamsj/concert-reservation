@@ -1,18 +1,16 @@
-package com.concert.reservation.usecase;
+package com.concert.reservation.service;
 
 import com.concert.reservation.component.ReservationManager;
 import com.concert.reservation.dto.request.ReservationRequest;
 import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 @Service
-public class ReservationUseCase {
+@RequiredArgsConstructor
+public class ReservationService {
 
     private final ReservationManager reservationManager;
-
-    public ReservationUseCase(ReservationManager reservationManager) {
-        this.reservationManager = reservationManager;
-    }
 
     public void createReservation(@Valid ReservationRequest request) {
         reservationManager.createReservation(request);

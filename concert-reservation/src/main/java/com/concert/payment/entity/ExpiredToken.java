@@ -14,8 +14,5 @@ import lombok.Setter;
 public class ExpiredToken {
     @Id
     @Column(name = "token_id")
-    private Long tokenId;
-
-    @Column(name = "delete_yn")
-    private boolean deleteYn;
+    private String tokenId;
 }

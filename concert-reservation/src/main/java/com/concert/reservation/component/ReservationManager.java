@@ -1,5 +1,6 @@
 package com.concert.reservation.component;
 
+import com.concert.repositories.point.PointRepository;
 import com.concert.repositories.reservation.ConcertRepository;
 import com.concert.repositories.reservation.ConcertReservationRepository;
 import com.concert.repositories.reservation.ConcertSheduleRepository;
@@ -9,6 +10,7 @@ import com.concert.reservation.dto.response.ConcertScheduleResponse;
 import com.concert.reservation.dto.response.ConcertSeatResponse;
 import com.concert.reservation.entity.ConcertReservation;
 import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -17,17 +19,12 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 @Component
+@RequiredArgsConstructor
 public class ReservationManager {
     private final ConcertRepository concertRepository;
     private final ConcertSheduleRepository concertSheduleRepository;
     private final ConcertReservationRepository concertReservationRepository;
-
-    @Autowired
-    public ReservationManager(ConcertRepository concertRepository, ConcertSheduleRepository concertSheduleRepository, ConcertReservationRepository concertReservationRepository) {
-        this.concertRepository = concertRepository;
-        this.concertSheduleRepository = concertSheduleRepository;
-        this.concertReservationRepository = concertReservationRepository;
-    }
+    private final PointRepository pointRepository;
 
     // 콘서트 조회
     public List<ConcertResponse> getConcert() {
@@ -63,5 +60,7 @@ public class ReservationManager {
                 .build();
 
         concertReservationRepository.save(reservation);
+
+        pointRepository.chargePoint(request.getUserId(), -request.getPoint());
     }
 }

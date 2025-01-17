@@ -1,19 +1,16 @@
-package com.concert.point.usecase;
+package com.concert.point.service;
 
 import com.concert.point.component.PointManager;
 import com.concert.point.dto.response.PointGetResponse;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class GetPointUseCase {
+@RequiredArgsConstructor
+public class GetPointService {
 
     private final PointManager pointManager;
-
-    @Autowired
-    public GetPointUseCase(PointManager pointManager) {
-        this.pointManager = pointManager;
-    }
 
     public PointGetResponse execute(Long userId) {
         Long point = pointManager.getPoint(userId);

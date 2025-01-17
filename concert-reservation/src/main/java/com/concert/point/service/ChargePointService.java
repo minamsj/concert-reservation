@@ -1,21 +1,17 @@
-package com.concert.point.usecase;
+package com.concert.point.service;
 
 import com.concert.point.component.PointManager;
 import com.concert.point.dto.request.PointChargeRequest;
-import com.concert.point.entity.PointHistory;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
-public class ChargePointUseCase {
+@RequiredArgsConstructor
+public class ChargePointService {
 
     private final PointManager pointManager;
-
-    @Autowired
-    public ChargePointUseCase(PointManager pointManager) {
-        this.pointManager = pointManager;
-    }
 
     @Transactional
     public void execute(PointChargeRequest request) {

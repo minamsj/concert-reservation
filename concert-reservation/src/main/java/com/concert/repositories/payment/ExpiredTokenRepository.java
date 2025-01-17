@@ -10,8 +10,4 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Repository
 public interface ExpiredTokenRepository extends JpaRepository<ExpiredToken, Long> {
-    @Modifying
-    @Transactional
-    @Query("UPDATE ExpiredToken t SET t.deleteYn = true WHERE t.tokenId = :#{#request.tokenId}")
-    void expireToken(PaymentRequest request);
 }

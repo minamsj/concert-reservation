@@ -12,4 +12,5 @@ public class ReservationRequest {
     private Long userId;
     private Long schedulesId;
     private Long concertId;
+    private Long point;
 }

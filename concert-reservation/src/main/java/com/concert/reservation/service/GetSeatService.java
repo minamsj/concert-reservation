@@ -1,19 +1,17 @@
-package com.concert.reservation.usecase;
+package com.concert.reservation.service;
 
 import com.concert.reservation.component.ReservationManager;
 import com.concert.reservation.dto.response.ConcertSeatResponse;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
-public class GetSeatUseCase {
+@RequiredArgsConstructor
+public class GetSeatService {
 
     private final ReservationManager reservationManager;
-
-    public GetSeatUseCase(ReservationManager reservationManager) {
-        this.reservationManager = reservationManager;
-    }
 
     public List<ConcertSeatResponse> execute(Long schedulesId) {
         return reservationManager.getAvailableSeats(schedulesId);
