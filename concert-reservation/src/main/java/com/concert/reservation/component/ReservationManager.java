@@ -1,17 +1,16 @@
 package com.concert.reservation.component;
 
-import com.concert.repositories.point.PointRepository;
-import com.concert.repositories.reservation.ConcertRepository;
-import com.concert.repositories.reservation.ConcertReservationRepository;
-import com.concert.repositories.reservation.ConcertSheduleRepository;
-import com.concert.reservation.dto.request.ReservationRequest;
-import com.concert.reservation.dto.response.ConcertResponse;
-import com.concert.reservation.dto.response.ConcertScheduleResponse;
-import com.concert.reservation.dto.response.ConcertSeatResponse;
-import com.concert.reservation.entity.ConcertReservation;
+import com.concert.intrastructure.point.PointRepository;
+import com.concert.intrastructure.reservation.ConcertRepository;
+import com.concert.intrastructure.reservation.ConcertReservationRepository;
+import com.concert.intrastructure.reservation.ConcertSheduleRepository;
+import com.concert.interfaces.api.reservation.ReservationRequest;
+import com.concert.interfaces.api.reservation.ConcertResponse;
+import com.concert.interfaces.api.reservation.ConcertScheduleResponse;
+import com.concert.interfaces.api.reservation.ConcertSeatResponse;
+import com.concert.domain.reservation.ConcertReservation;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.List;

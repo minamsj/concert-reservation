@@ -1,11 +1,10 @@
 package com.concert.payment.component;
 
-import com.concert.payment.dto.request.PaymentRequest;
-import com.concert.payment.entity.Payment;
-import com.concert.repositories.payment.ExpiredTokenRepository;
-import com.concert.repositories.payment.PaymentRepository;
-import com.concert.repositories.payment.PaymentReservationRepository;
-import com.concert.repositories.point.PointRepository;
+import com.concert.interfaces.api.payment.PaymentRequest;
+import com.concert.domain.payment.Payment;
+import com.concert.intrastructure.payment.PaymentRepository;
+import com.concert.intrastructure.payment.PaymentReservationRepository;
+import com.concert.intrastructure.point.PointRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 

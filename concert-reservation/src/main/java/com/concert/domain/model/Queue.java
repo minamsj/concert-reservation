@@ -1,6 +1,6 @@
 package com.concert.domain.model;
 
-import com.concert.queue.entity.QueueEntity;
+import com.concert.domain.queque.QueueEntity;
 import lombok.Getter;
 
 import java.time.LocalDateTime;

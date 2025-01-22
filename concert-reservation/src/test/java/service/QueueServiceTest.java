@@ -2,9 +2,9 @@ package service;
 
 import com.concert.domain.model.Queue;
 import com.concert.domain.model.QueueStatus;
-import com.concert.queue.entity.QueueEntity;
-import com.concert.queue.service.QueueService;
-import com.concert.repositories.queue.QueueRepository;
+import com.concert.intrastructure.queque.QueueRepositoryImpl;
+import com.concert.domain.queque.QueueEntity;
+import com.concert.domain.queque.QueueService;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -17,7 +17,6 @@ import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.verify;
 import static org.assertj.core.api.Assertions.assertThat;
 
-import java.time.LocalDateTime;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -27,28 +26,28 @@ class QueueServiceTest {
     private QueueService queueService;
 
     @Mock
-    private QueueRepository queueRepository;
+    private QueueRepositoryImpl queueJpaRepository;
 
     @Test
     @DisplayName("대기열 생성 성공")
     void createQueue_Success() {
         // given
         Long userId = 1L;
-        Long sheduleId = 13L;
-        given(queueRepository.findMaxWaitingNumber())
+        Long scheduleId = 13L;
+        given(queueJpaRepository.findMaxWaitingNumber())
                 .willReturn(Optional.of(10L));
-        given(queueRepository.save(any(QueueEntity.class)))
+        given(queueJpaRepository.save(any(QueueEntity.class)))
                 .willAnswer(invocation -> invocation.getArgument(0));
 
         // when
-        Queue queue = queueService.createQueue(userId, sheduleId);
+        Queue queue = queueService.createQueue(userId, scheduleId);
 
         // then
         assertThat(queue.getUserId()).isEqualTo(userId);
         assertThat(queue.getWaitingNumber()).isEqualTo(11);
         assertThat(queue.getStatus()).isEqualTo(QueueStatus.WAITING);
         assertThat(queue.getToken()).isNotNull();
-        verify(queueRepository).save(any(QueueEntity.class));
+        verify(queueJpaRepository).save(any(QueueEntity.class));
     }
 
     @Test
@@ -63,7 +62,7 @@ class QueueServiceTest {
                 .status(QueueStatus.WAITING)
                 .build();
 
-        given(queueRepository.findByToken(token))
+        given(queueJpaRepository.findByToken(token))
                 .willReturn(Optional.of(mockEntity));
 
         // when
@@ -72,7 +71,7 @@ class QueueServiceTest {
         // then
         assertThat(queue.getToken()).isEqualTo(token);
         assertThat(queue.getStatus()).isEqualTo(QueueStatus.WAITING);
-        verify(queueRepository).findByToken(token);
+        verify(queueJpaRepository).findByToken(token);
     }
 }
 
