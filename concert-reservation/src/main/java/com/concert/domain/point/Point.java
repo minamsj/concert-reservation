@@ -19,6 +19,9 @@ public class Point {
     @Column(name = "point")
     private Long point;
 
+    @Version
+    private Integer version;
+
     public Point() {}
 
     public Point(Long userId, Long point) {
