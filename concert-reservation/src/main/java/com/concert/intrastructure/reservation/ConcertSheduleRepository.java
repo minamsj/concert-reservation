@@ -11,6 +11,6 @@ import java.util.List;
 
 @Repository
 public interface ConcertSheduleRepository extends JpaRepository<ConcertShedules, Long> {
-    @Query("SELECT NEW com.concert.reservation.dto.response.ConcertScheduleResponse(cs.id, cs.concertId, cs.schedulesDate, cs.concertPrice) FROM ConcertShedules cs WHERE cs.concertId = :concertId")
+    @Query("SELECT NEW com.concert.interfaces.api.reservation.ConcertScheduleResponse(cs.id, cs.concertId, cs.schedulesDate, cs.concertPrice) FROM ConcertShedules cs WHERE cs.concertId = :concertId")
     List<ConcertScheduleResponse> getConcertShedule(@Param("concertId") Long concertId);
 }

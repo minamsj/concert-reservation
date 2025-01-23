@@ -1,6 +1,8 @@
 package com.concert.domain.reservation;
 
+import com.concert.interfaces.api.reservation.ConcertResponse;
 import com.concert.interfaces.api.reservation.ConcertScheduleResponse;
+import com.concert.interfaces.api.reservation.ConcertSeatResponse;
 import com.concert.intrastructure.point.PointRepository;
 import com.concert.intrastructure.reservation.ConcertRepository;
 import com.concert.intrastructure.reservation.ConcertReservationRepository;
@@ -11,6 +13,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 @Service
 @RequiredArgsConstructor
@@ -37,6 +41,10 @@ public class ReservationService {
 
     public List<ConcertScheduleResponse> getConcertShedules(Long concertId) {
         return concertSheduleRepository.getConcertShedule(concertId);
+    }
+
+    public List<ConcertResponse> getConcert() {
+        return concertRepository.getConcert();
     }
 
 }

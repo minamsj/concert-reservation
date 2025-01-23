@@ -1,19 +1,32 @@
 package com.concert.domain.reservation;
 
-import com.concert.reservation.component.ReservationManager;
+import com.concert.intrastructure.reservation.ConcertReservationRepository;
 import com.concert.interfaces.api.reservation.ConcertSeatResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 @Service
 @RequiredArgsConstructor
 public class GetSeatService {
 
-    private final ReservationManager reservationManager;
+    private final ConcertReservationRepository concertReservationRepository;
 
-    public List<ConcertSeatResponse> execute(Long schedulesId) {
-        return reservationManager.getAvailableSeats(schedulesId);
+    public List<ConcertSeatResponse> getAvailableSeats(Long schedulesId) {
+        List<Long> soldOutSeats = concertReservationRepository.findSoldOutSeats(schedulesId);
+        return generateSeatList(soldOutSeats);
     }
+
+    private List<ConcertSeatResponse> generateSeatList(List<Long> soldOutSeats) {
+        return IntStream.rangeClosed(1, 50)
+                .mapToObj(seatNum -> ConcertSeatResponse.builder()
+                        .seatNum((long) seatNum)
+                        .isSoldOut(soldOutSeats.contains((long) seatNum))
+                        .build())
+                .collect(Collectors.toList());
+    }
+
 }

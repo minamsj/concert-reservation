@@ -10,6 +10,6 @@ import java.util.List;
 
 @Repository
 public interface ConcertRepository extends JpaRepository<Concert, Long> {
-    @Query("SELECT NEW com.concert.reservation.dto.response.ConcertResponse(c.id, c.concertTitle) FROM Concert c")
+    @Query("SELECT NEW com.concert.interfaces.api.reservation.ConcertResponse(c.id, c.concertTitle) FROM Concert c")
     List<ConcertResponse> getConcert();
 }
