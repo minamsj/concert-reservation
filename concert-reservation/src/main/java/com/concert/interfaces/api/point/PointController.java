@@ -15,14 +15,14 @@ public class PointController {
     private final PointFacade pointFacade;
 
     @Operation(summary = "포인트 조회", description = "포인트 조회하는 API")
-    @PostMapping("/{userId}")
-    public PointGetResponse getPoint(@RequestParam @PathVariable Long userId) {
+    @GetMapping("/{userId}")
+    public PointGetResponse getPoint(@PathVariable Long userId) {
         return pointFacade.getPoint(userId);
     }
 
     @Operation(summary = "포인트 충전", description = "포인트 충전하는 API")
     @PostMapping("/charge")
-    public void chargePoint(@RequestBody PointChargeRequest request) {
-        pointFacade.chargePoint(request);
+    public void chargePoint(@RequestParam Long userId, @RequestParam Long amount) {
+        pointFacade.chargePoint(userId, amount);
     }
 }
