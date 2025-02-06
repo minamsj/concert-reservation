@@ -3,6 +3,7 @@ package com.concert.domain.point;
 import com.concert.intrastructure.point.PointHistoryRepository;
 import com.concert.intrastructure.point.PointRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.dao.OptimisticLockingFailureException;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -11,6 +12,7 @@ public class PointService {
 
     private final PointRepository pointRepository;
     private final PointHistoryRepository pointHistoryRepository;
+    private static final int MAX_RETRIES = 3;
 
     // 잔액 조회
     public Long getPoint(Long userId) {
@@ -28,11 +30,26 @@ public class PointService {
 
     public void chargePoint(Long userId, Long amount) {
         if (amount < 10000) throw new RuntimeException();
-        Long point = pointRepository.getPoint(userId);
-        if (point == null) {
-            pointRepository.save(new Point(userId, amount));
-        } else {
-            pointRepository.chargePoint(userId, amount);
+
+        Point point = pointRepository.findByUserId(userId)
+                .orElse(new Point(userId, 0L));
+
+        for (int attempt = 0; attempt < MAX_RETRIES; attempt++) {
+            try {
+                if (point.getId() == null) {
+                    point.setPoint(amount);
+                    pointRepository.save(point);
+                    return;
+                }
+
+                int updated = pointRepository.chargePoint(userId, amount, point.getVersion());
+                if (updated > 0) return;
+
+                point = pointRepository.findByUserId(userId).orElseThrow();
+
+            } catch (OptimisticLockingFailureException e) {
+                if (attempt == MAX_RETRIES - 1) throw new RuntimeException("포인트 충전 실패", e);
+            }
         }
     }
 
