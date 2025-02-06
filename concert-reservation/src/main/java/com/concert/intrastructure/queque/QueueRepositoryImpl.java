@@ -6,6 +6,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Optional;
 
 @Repository
@@ -31,7 +32,6 @@ public class QueueRepositoryImpl {
                 .executeUpdate();
     }
 
-    // JpaRepository의 기본 메서드들을 위임
     public QueueEntity save(QueueEntity entity) {
         return queueJpaRepository.save(entity);
     }
@@ -49,6 +49,17 @@ public class QueueRepositoryImpl {
                 .ifPresent(queueJpaRepository::delete);
     }
 
-    public void deleteByExpiredAt(LocalDateTime now) {
+    public void processExpiredTokens(LocalDateTime now) {
+        // 삭제할 토큰들의 schedule_id 조회
+        List<Long> expiredScheduleIds = queueJpaRepository.findExpiredScheduleIds(now);
+
+        // 토큰 삭제
+        queueJpaRepository.deleteByExpiredAt(now);
+
+        // 대기번호, 상태 업데이트
+        for (Long scheduleId : expiredScheduleIds) {
+            queueJpaRepository.updateWaitingNumbers(scheduleId);
+            queueJpaRepository.updateStatusToReady(scheduleId);
+        }
     }
 }

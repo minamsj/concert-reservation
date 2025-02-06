@@ -27,8 +27,7 @@ public class QueueController {
         return ResponseEntity.ok(queueFacade.updateQueueExpiredAt(token));
     }
 
-    // 현재 대기열 순서 추가
-    @Operation(summary = "대기열 상태 조회", description = "대기열 상태를 조회합니다.")
+    @Operation(summary = "대기열 조회", description = "대기열 조회합니다.")
     @GetMapping("/status/{token}")
     public ResponseEntity<QueueStatusResponse> getQueueStatus(@PathVariable String token) {
         return ResponseEntity.ok(queueFacade.getQueueStatus(token));

@@ -12,12 +12,14 @@ import java.time.LocalDateTime;
 public class QueueStatusResponse {
     private String token;
     private QueueStatus status;
+    private Long waitingNumber;
     private LocalDateTime expiredAt;
 
     public static QueueStatusResponse from(Queue queue) {
         return QueueStatusResponse.builder()
                 .token(queue.getToken())
                 .status(queue.getStatus())
+                .waitingNumber(queue.getWaitingNumber())
                 .expiredAt(queue.getCreatedAt())
                 .build();
     }

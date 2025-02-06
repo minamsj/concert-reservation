@@ -14,11 +14,11 @@ import java.time.LocalDateTime;
 public class TokenExpirationScheduler {
     private final QueueRepositoryImpl queueJpaRepository;
 
-    // 서비스로, 도메인이 아님
-    @Scheduled(fixedRate = 1000) // 1초마다 실행
+    @Scheduled(fixedRate = 1000)
     @Transactional
     public void checkAndUpdateExpiredTokens() {
         LocalDateTime now = LocalDateTime.now();
-        queueJpaRepository.deleteByExpiredAt(now);
+        queueJpaRepository.processExpiredTokens(now);
+
     }
 }
