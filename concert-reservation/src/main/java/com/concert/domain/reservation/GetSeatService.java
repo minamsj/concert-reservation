@@ -1,6 +1,6 @@
 package com.concert.domain.reservation;
 
-import com.concert.intrastructure.reservation.ConcertReservationRepository;
+import com.concert.infrastructure.reservation.ConcertReservationJpaRepository;
 import com.concert.interfaces.api.reservation.ConcertSeatResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -12,8 +12,7 @@ import java.util.stream.IntStream;
 @Service
 @RequiredArgsConstructor
 public class GetSeatService {
-
-    private final ConcertReservationRepository concertReservationRepository;
+    private final ConcertReservationRepository concertReservationRepository;  // 인터페이스 의존
 
     public List<ConcertSeatResponse> getAvailableSeats(Long schedulesId) {
         List<Long> soldOutSeats = concertReservationRepository.findSoldOutSeats(schedulesId);
@@ -28,5 +27,4 @@ public class GetSeatService {
                         .build())
                 .collect(Collectors.toList());
     }
-
 }

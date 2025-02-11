@@ -1,4 +1,4 @@
-package com.concert.intrastructure.payment;
+package com.concert.infrastructure.payment;
 
 import com.concert.domain.payment.ExpiredToken;
 import org.springframework.data.jpa.repository.JpaRepository;

@@ -1,4 +1,4 @@
-package com.concert.intrastructure.point;
+package com.concert.infrastructure.point;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;

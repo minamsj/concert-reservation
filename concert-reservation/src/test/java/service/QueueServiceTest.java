@@ -2,7 +2,7 @@ package service;
 
 import com.concert.domain.model.Queue;
 import com.concert.domain.model.QueueStatus;
-import com.concert.intrastructure.queque.QueueRepositoryImpl;
+import com.concert.infrastructure.queque.QueueRepositoryImpl;
 import com.concert.domain.queque.QueueEntity;
 import com.concert.domain.queque.QueueService;
 import org.junit.jupiter.api.DisplayName;

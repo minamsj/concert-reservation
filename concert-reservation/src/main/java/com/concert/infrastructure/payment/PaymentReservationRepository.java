@@ -1,4 +1,4 @@
-package com.concert.intrastructure.payment;
+package com.concert.infrastructure.payment;
 
 import com.concert.interfaces.api.payment.PaymentRequest;
 import com.concert.domain.payment.PaymentReservation;

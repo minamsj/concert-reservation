@@ -3,31 +3,28 @@ package com.concert.domain.reservation;
 import com.concert.domain.point.Point;
 import com.concert.interfaces.api.reservation.ConcertResponse;
 import com.concert.interfaces.api.reservation.ConcertScheduleResponse;
-import com.concert.interfaces.api.reservation.ConcertSeatResponse;
-import com.concert.intrastructure.point.PointRepository;
-import com.concert.intrastructure.reservation.ConcertRepository;
-import com.concert.intrastructure.reservation.ConcertReservationRepository;
-import com.concert.intrastructure.reservation.ConcertSheduleRepository;
+import com.concert.infrastructure.point.PointRepository;
+import com.concert.infrastructure.reservation.ConcertRepository;
+import com.concert.infrastructure.reservation.ConcertReservationJpaRepository;
+import com.concert.infrastructure.reservation.ConcertScheduleRepository;
 import com.concert.interfaces.api.reservation.ReservationRequest;
-import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.redisson.api.RLock;
 import org.redisson.api.RedissonClient;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.dao.OptimisticLockingFailureException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.concurrent.TimeUnit;
-import java.util.stream.Collectors;
-import java.util.stream.IntStream;
 
 @Service
 @RequiredArgsConstructor
 public class ReservationService {
 
     private final ConcertRepository concertRepository;
-    private final ConcertSheduleRepository concertSheduleRepository;
-    private final ConcertReservationRepository concertReservationRepository;
+    private final ConcertScheduleRepository concertScheduleRepository;
+    private final ConcertReservationJpaRepository concertReservationRepository;
     private final PointRepository pointRepository;
     private static final int MAX_RETRIES = 3;
     private final RedissonClient redissonClient;
@@ -87,10 +84,11 @@ public class ReservationService {
         }
     }
 
-    public List<ConcertScheduleResponse> getConcertShedules(Long concertId) {
-        return concertSheduleRepository.getConcertShedule(concertId);
+    public List<ConcertScheduleResponse> getConcertSchedules(Long concertId) {
+        return concertScheduleRepository.getConcertSchedule(concertId);
     }
 
+    @Cacheable(value = "concerts", unless = "#result == null")
     public List<ConcertResponse> getConcert() {
         return concertRepository.getConcert();
     }

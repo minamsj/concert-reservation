@@ -1,4 +1,4 @@
-package com.concert.intrastructure.queque;
+package com.concert.infrastructure.queque;
 
 import com.concert.domain.queque.QueueEntity;
 import jakarta.persistence.EntityManager;

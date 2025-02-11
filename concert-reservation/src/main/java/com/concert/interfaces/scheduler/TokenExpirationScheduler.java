@@ -1,7 +1,6 @@
 package com.concert.interfaces.scheduler;
 
-import com.concert.intrastructure.queque.QueueJpaRepository;
-import com.concert.intrastructure.queque.QueueRepositoryImpl;
+import com.concert.infrastructure.queque.QueueRepositoryImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;

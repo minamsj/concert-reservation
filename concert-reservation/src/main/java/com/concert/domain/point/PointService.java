@@ -1,7 +1,7 @@
 package com.concert.domain.point;
 
-import com.concert.intrastructure.point.PointHistoryRepository;
-import com.concert.intrastructure.point.PointRepository;
+import com.concert.infrastructure.point.PointHistoryRepository;
+import com.concert.infrastructure.point.PointRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.dao.OptimisticLockingFailureException;
 import org.springframework.stereotype.Service;

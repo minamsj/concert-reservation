@@ -1,11 +1,13 @@
 package com.concert.interfaces.api.reservation;
 
 import com.concert.application.reservation.ReqservationFacade;
+import com.concert.domain.reservation.DataGenerator;
 import com.concert.domain.reservation.GetSeatService;
 import com.concert.domain.reservation.ReservationService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -25,7 +27,7 @@ public class ReservationController {
     }
 
     @Operation(summary = "콘서트 날짜, 회차 조회", description = "콘서트 날짜, 회차 조회하는 API")
-    @GetMapping("/{concertId}")
+    @GetMapping("/Schedules")
     public List<ConcertScheduleResponse> getConcertSchedules(@RequestParam Long concertId) {
         return reqservationFacade.getConcertShedules(concertId);
     }

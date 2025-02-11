@@ -21,7 +21,7 @@ public class ReqservationFacade {
 
     @Transactional
     public List<ConcertScheduleResponse> getConcertShedules(Long concertId) {
-        return reservationService.getConcertShedules(concertId);
+        return reservationService.getConcertSchedules(concertId);
     }
 
     @Transactional

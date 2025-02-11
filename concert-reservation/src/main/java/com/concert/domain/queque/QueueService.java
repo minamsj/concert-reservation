@@ -1,7 +1,7 @@
 package com.concert.domain.queque;
 
 import com.concert.domain.model.Queue;
-import com.concert.intrastructure.queque.QueueRepositoryImpl;
+import com.concert.infrastructure.queque.QueueRepositoryImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

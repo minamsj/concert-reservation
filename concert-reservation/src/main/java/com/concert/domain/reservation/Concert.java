@@ -12,8 +12,8 @@ public class Concert {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "concert_id")
-    private Long id;
+    private Long concert_id;
 
     @Column(name = "concert_title")
-    private String concertTitle;
+    private String concert_title;
 }

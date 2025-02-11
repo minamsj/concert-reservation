@@ -1,7 +1,7 @@
 package com.concert.domain.payment;
 
-import com.concert.intrastructure.payment.PaymentRepository;
-import com.concert.intrastructure.payment.PaymentReservationRepository;
+import com.concert.infrastructure.payment.PaymentRepository;
+import com.concert.infrastructure.payment.PaymentReservationRepository;
 import com.concert.interfaces.api.payment.PaymentRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

@@ -1,4 +1,4 @@
-package com.concert.intrastructure.point;
+package com.concert.infrastructure.point;
 
 import com.concert.domain.point.PointHistory;
 import org.springframework.data.jpa.repository.JpaRepository;
